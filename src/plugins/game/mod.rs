@@ -10,6 +10,9 @@ impl Plugin for GamePlugin {
         app
             // .add_plugins()
             .add_systems(Startup, (setup::setup_camera, setup::setup_block))
-            .add_systems(Update, (movement::keyboard_move));
+            .add_systems(
+                Update,
+                (movement::keyboard_movement, movement::camera_movement),
+            );
     }
 }

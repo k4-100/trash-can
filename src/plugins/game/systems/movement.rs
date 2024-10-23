@@ -1,9 +1,7 @@
-use std::iter;
-
 use crate::utils::*;
-use bevy::{input::keyboard::KeyboardInput, prelude::*};
+use bevy::prelude::*;
 
-pub fn keyboard_move(
+pub fn keyboard_movement(
     mut player_query: Query<(&mut Transform), With<components::Player>>,
     // keys: KeyboardInput,
     keyboard_input: Res<ButtonInput<KeyCode>>,
@@ -18,15 +16,18 @@ pub fn keyboard_move(
             KeyCode::KeyA => movement_vec.x -= 1.0,
             KeyCode::KeyD => movement_vec.x += 1.0,
             _ => {
-                return;
+                return; // quit the execution if no key has been pressed pressed
             }
         }
     }
 
+    // adjust direction with speed and time passed since the last run
     movement_vec *= 300.0 * time.delta_seconds();
 
     for (mut transform) in player_query.iter_mut() {
-        movement_vec.y = transform.translation.y;
+        movement_vec.y = transform.translation.y; // DO NOT apply to y -> otherwise it will turn to 0
         transform.translation += movement_vec;
     }
 }
+
+pub fn camera_movement(mut player_query: Query<(&mut Transform), With<components::Player>>) {}
