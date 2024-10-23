@@ -16,10 +16,26 @@ codegen-backend = "cranelift"
 opt-level = 3
 codegen-backend = "llvm"
 
+[features]
+
+# default = ["bevy_pbr", "bevy_render", "egui_clipboard", "egui_open_url"]
+# bevy_render = ["dep:bevy_render", "dep:bevy_core_pipeline", "bevy_egui/render"]
+# egui_clipboard = ["bevy_egui/manage_clipboard"]
+# egui_open_url = ["bevy_egui/open_url"]
+# highlight_changes = []
+#
+
 [dependencies]
 bevy = { version = "0.14.2", features = ["dynamic_linking"] }
 bevy-inspector-egui = "0.27.0"
+bevy_asset = "0.14.2"
 bevy_egui = "0.30.0"
+bevy_reflect = "0.14.2"
+bevy_render = "0.14.2"
+bevy_window = "0.14.2"
+egui_dock = "0.14.0"
+
+
 
 [unstable]
 codegen-backend = true
