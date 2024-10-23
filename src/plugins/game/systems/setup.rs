@@ -11,10 +11,10 @@ pub fn setup_camera(mut commands: Commands) {
                 y: 1.5,
                 z: 1.0,
             },
-            translation: Vec3::new(0.0, 0.0, 0.0),
+            translation: Vec3::new(0.0, 0.0, 500.0),
             ..default()
         }
-        .looking_at(Vec3::new(0.0, 1.0, 0.0), Vec3::Y),
+        .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
         ..default()
     },));
 }
@@ -25,12 +25,12 @@ pub fn setup_block(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     commands.spawn(PbrBundle {
-        mesh: meshes.add(Plane3d::default().mesh().size(100.0, 80.0)),
+        mesh: meshes.add(Cuboid::from_size(Vec3::new(200.0, 50.0, 100.0))),
         material: materials.add(StandardMaterial {
             base_color: Color::srgba(0.0, 0.0, 255.0, 1.0),
             ..default()
         }),
-        transform: Transform::from_xyz(0.0, 0.0, 100.0),
+        transform: Transform::from_xyz(0.0, 0.0, 0.0),
         ..default()
     });
     // let square_mesh_handle = Mesh2dHandle(meshes.add(Rectangle::new(50.0, 100.0)));
