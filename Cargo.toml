@@ -18,6 +18,8 @@ codegen-backend = "llvm"
 
 [dependencies]
 bevy = { version = "0.14.2", features = ["dynamic_linking"] }
+bevy-inspector-egui = "0.27.0"
+bevy_egui = "0.30.0"
 
 [unstable]
 codegen-backend = true

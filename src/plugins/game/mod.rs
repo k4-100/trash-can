@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 pub mod systems;
+use systems::*;
 
 pub struct GamePlugin;
 
@@ -8,9 +9,6 @@ impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
             // .add_plugins()
-            .add_systems(
-                Startup,
-                (systems::setup::setup_camera, systems::setup::setup_square),
-            );
+            .add_systems(Startup, (setup::setup_camera, setup::setup_block));
     }
 }
