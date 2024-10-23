@@ -1,8 +1,8 @@
-use bevy::{prelude::*, window::PrimaryWindow};
-use bevy_egui::{egui, EguiContext, EguiPlugin};
-use bevy_inspector_egui::prelude::*;
+use bevy::prelude::*;
 use plugins::debug::DebugPlugin;
-use std::any::TypeId;
+// use bevy_egui::{egui, EguiContext, EguiPlugin};
+// use bevy_inspector_egui::prelude::*;
+// use std::any::TypeId;
 
 pub mod plugins;
 pub mod utils;
