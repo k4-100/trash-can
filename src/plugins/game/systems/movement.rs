@@ -34,9 +34,13 @@ pub fn keyboard_movement(
 pub fn camera_movement(
     mut player_query: Query<(&mut Transform), With<components::Player>>,
     mut evr_motion: EventReader<MouseMotion>,
+    time: Res<Time>,
 ) {
+    let mut player_transform = player_query.single_mut();
+    // player_transform.rotate_local_y(time.delta_seconds().to_radians() * 100.0);
     for ev in evr_motion.read() {
-        println!("Mouse moved: X: {} px, Y: {} px", ev.delta.x, ev.delta.y);
+        let Vec2 { x, y } = ev.delta;
+        // println!()
     }
 }
 
