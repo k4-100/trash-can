@@ -40,7 +40,10 @@ pub fn camera_movement(
     }
 }
 
-pub fn cursor_grab(mut q_windows: Query<&mut Window, With<PrimaryWindow>>) {
+pub fn cursor_grab(
+    mut q_windows: Query<&mut Window, With<PrimaryWindow>>,
+    mut cursor_grabbed: ResMut<resources::GrabbedCursor>,
+) {
     let mut primary_window = q_windows.single_mut();
 
     // if you want to use the cursor, but not let it leave the window,
@@ -53,11 +56,18 @@ pub fn cursor_grab(mut q_windows: Query<&mut Window, With<PrimaryWindow>>) {
 
     // also hide the cursor
     primary_window.cursor.visible = false;
+
+    cursor_grabbed.0 = true;
 }
 
-pub fn cursor_ungrab(mut q_windows: Query<&mut Window, With<PrimaryWindow>>) {
+pub fn cursor_ungrab(
+    mut q_windows: Query<&mut Window, With<PrimaryWindow>>,
+    mut cursor_grabbed: ResMut<resources::GrabbedCursor>,
+) {
     let mut primary_window = q_windows.single_mut();
 
     primary_window.cursor.grab_mode = CursorGrabMode::None;
     primary_window.cursor.visible = true;
+
+    cursor_grabbed.0 = false;
 }

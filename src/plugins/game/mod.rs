@@ -15,10 +15,11 @@ impl Plugin for GamePlugin {
                 Update,
                 (
                     movement::keyboard_movement,
-                    movement::camera_movement,
                     movement::cursor_grab.run_if(run_conditions::if_rmb_pressed),
                     movement::cursor_ungrab.run_if(run_conditions::if_rmb_not_pressed),
+                    movement::camera_movement.run_if(run_conditions::if_cursor_grabbed),
                 ),
-            );
+            )
+            .insert_resource(resources::GrabbedCursor(false));
     }
 }
