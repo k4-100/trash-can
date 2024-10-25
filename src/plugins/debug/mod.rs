@@ -41,8 +41,8 @@ impl Plugin for DebugPlugin {
                     .before(bevy_egui::systems::end_pass_system)
                     .before(bevy::transform::TransformSystem::TransformPropagate),
             )
-            .add_systems(PostUpdate, set_camera_viewport.after(show_ui_system))
-            .add_systems(Update, set_gizmo_mode)
+            // .add_systems(PostUpdate, set_camera_viewport.after(show_ui_system))
+            // .add_systems(Update, set_gizmo_mode)
             // .add_systems(Update, auto_add_raycast_target)
             // .add_systems(Update, handle_pick_events)
             .register_type::<Option<Handle<Image>>>()
@@ -234,9 +234,9 @@ impl egui_dock::TabViewer for TabViewer<'_> {
 
         match window {
             EguiWindow::GameView => {
-                *self.viewport_rect = ui.clip_rect();
-
-                draw_gizmo(ui, self.world, self.selected_entities, self.gizmo_mode);
+                // *self.viewport_rect = ui.clip_rect();
+                //
+                // draw_gizmo(ui, self.world, self.selected_entities, self.gizmo_mode);
             }
             EguiWindow::Hierarchy => {
                 let selected = hierarchy_ui(self.world, ui, self.selected_entities);
@@ -522,13 +522,13 @@ fn setup(
     // });
 
     // camera
-    commands.spawn((
-        Camera3dBundle {
-            transform: Transform::from_xyz(0.0, box_offset, 4.0)
-                .looking_at(Vec3::new(0.0, box_offset, 0.0), Vec3::Y),
-            ..Default::default()
-        },
-        MainCamera,
-        // PickRaycastSource,
-    ));
+    // commands.spawn((
+    //     Camera3dBundle {
+    //         transform: Transform::from_xyz(0.0, box_offset, 4.0)
+    //             .looking_at(Vec3::new(0.0, box_offset, 0.0), Vec3::Y),
+    //         ..Default::default()
+    //     },
+    //     MainCamera,
+    //     // PickRaycastSource,
+    // ));
 }
