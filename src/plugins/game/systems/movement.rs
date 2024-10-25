@@ -37,7 +37,7 @@ pub fn camera_movement(
     time: Res<Time>,
 ) {
     let mut player_transform = player_query.single_mut();
-    // player_transform.rotate_local_y(time.delta_seconds().to_radians() * 100.0);
+    player_transform.rotate_local_y(time.delta_seconds().to_radians() * 100.0);
     for ev in evr_motion.read() {
         let Vec2 { x, y } = ev.delta;
         // println!()
