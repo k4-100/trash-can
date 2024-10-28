@@ -1,5 +1,5 @@
 use crate::utils::*;
-use bevy::{input::mouse::MouseMotion, prelude::*};
+use bevy::{input::mouse::MouseMotion, math::NormedVectorSpace, prelude::*};
 use bevy_window::{CursorGrabMode, PrimaryWindow};
 
 pub fn keyboard_movement(
@@ -31,16 +31,19 @@ pub fn keyboard_movement(
     }
 }
 
+// majority copied from: https://bevyengine.org/examples/camera/first-person-view-model/
 pub fn camera_movement(
     mut player_query: Query<(&mut Transform), With<components::Player>>,
-    mut evr_motion: EventReader<MouseMotion>,
-    time: Res<Time>,
+    mut mouse_motion: EventReader<MouseMotion>,
+    _time: Res<Time>,
 ) {
-    let mut player_transform = player_query.single_mut();
-    player_transform.rotate_local_y(time.delta_seconds().to_radians() * 100.0);
-    for ev in evr_motion.read() {
-        let Vec2 { x, y } = ev.delta;
-        // println!()
+    let mut transform = player_query.single_mut();
+    for motion in mouse_motion.read() {
+        let yaw = -motion.delta.x * 0.003;
+        let pitch = -motion.delta.y * 0.002;
+        // Order of rotations is important, see <https://gamedev.stackexchange.com/a/136175/103059>
+        transform.rotate_y(yaw);
+        transform.rotate_local_x(pitch);
     }
 }
 
