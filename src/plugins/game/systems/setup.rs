@@ -1,3 +1,5 @@
+use std::fs;
+
 use bevy::prelude::*;
 
 use crate::{spawn_cube_with_standard_material, utils};
@@ -94,4 +96,30 @@ pub fn setup_block(
     //     transform: Transform::from_xyz(0.0, 0.0, 0.0),
     //     ..default()
     // });
+}
+
+pub fn setup_block_from_txt(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
+    let map_raw = fs::read_to_string("assets/map.txt").expect("WRONG PATH");
+
+    let map: Vec<&str> = map_raw.trim_end().split("\n").map(|item| item).collect();
+
+    println!("{:#?}", map);
+
+    for (y, map_row) in map.iter().enumerate() {
+        for (x, map_sign) in map_row.split("").enumerate() {
+            if map_sign == "#" {
+                spawn_cube_with_standard_material!(
+                    commands,
+                    meshes,
+                    materials.add(Color::srgb_u8(127, 0, 127)),
+                    Vec3::new(200.0, 200.0, 200.0),
+                    Transform::from_xyz(200.0 * x as f32, 0.0, 200.0 * y as f32)
+                );
+            }
+        }
+    }
 }

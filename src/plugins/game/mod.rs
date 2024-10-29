@@ -10,7 +10,14 @@ impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
             // .add_plugins()
-            .add_systems(Startup, (setup::setup_camera, setup::setup_block))
+            .add_systems(
+                Startup,
+                (
+                    setup::setup_camera,
+                    // setup::setup_block
+                ),
+            )
+            .add_systems(PostStartup, setup::setup_block_from_txt)
             .add_systems(
                 Update,
                 (
