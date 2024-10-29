@@ -4,30 +4,31 @@ use bevy_window::{CursorGrabMode, PrimaryWindow};
 
 pub fn keyboard_movement(
     mut player_query: Query<(&mut Transform), With<components::Player>>,
-    // keys: KeyboardInput,
     keyboard_input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
 ) {
-    let mut movement_vec = Vec3::ZERO;
+    let mut velocity = Vec3::ZERO;
+    for transform in player_query.iter() {
+        let local_z = transform.local_z();
+        let forward = -Vec3::new(local_z.x, 0., local_z.z);
+        let right = Vec3::new(local_z.z, 0., -local_z.x);
 
-    for key in keyboard_input.get_pressed() {
-        match *key {
-            KeyCode::KeyW => movement_vec.z -= 1.0,
-            KeyCode::KeyS => movement_vec.z += 1.0,
-            KeyCode::KeyA => movement_vec.x -= 1.0,
-            KeyCode::KeyD => movement_vec.x += 1.0,
-            _ => {
-                return; // quit the execution if no key has been pressed pressed
+        for key in keyboard_input.get_pressed() {
+            match *key {
+                KeyCode::KeyW => velocity += forward,
+                KeyCode::KeyS => velocity -= forward,
+                KeyCode::KeyA => velocity -= right,
+                KeyCode::KeyD => velocity += right,
+                _ => {
+                    return; // quit the execution if no key has been pressed pressed
+                }
             }
         }
     }
-
+    velocity = velocity.normalize_or_zero();
     // adjust direction with speed and time passed since the last run
-    movement_vec *= 300.0 * time.delta_seconds();
-
-    for (mut transform) in player_query.iter_mut() {
-        movement_vec.y = transform.translation.y; // DO NOT apply to y -> otherwise it will turn to 0
-        transform.translation += movement_vec;
+    for mut transform in player_query.iter_mut() {
+        transform.translation += velocity * time.delta_seconds() * 300.0;
     }
 }
 
@@ -40,10 +41,10 @@ pub fn camera_movement(
     let mut transform = player_query.single_mut();
     for motion in mouse_motion.read() {
         let yaw = -motion.delta.x * 0.003;
-        let pitch = -motion.delta.y * 0.002;
+        // let pitch = -motion.delta.y * 0.002;
         // Order of rotations is important, see <https://gamedev.stackexchange.com/a/136175/103059>
         transform.rotate_y(yaw);
-        transform.rotate_local_x(pitch);
+        // transform.rotate_local_x(pitch);
     }
 }
 
