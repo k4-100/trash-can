@@ -2,12 +2,12 @@ use std::fs;
 
 use bevy::prelude::*;
 
-use crate::{spawn_cube_with_standard_material, utils};
+use crate::{spawn_cube_with_standard_material, utils::*};
 
 pub fn setup_camera(mut commands: Commands) {
     commands.spawn((
-        utils::components::CurrentPlayer,
-        utils::components::Player,
+        components::CurrentPlayer,
+        components::Player,
         Camera3dBundle {
             transform: Transform {
                 scale: Vec3 {
@@ -102,6 +102,7 @@ pub fn setup_block_from_txt(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
+    mut camera_transform: Query<&mut Transform, With<(components::CurrentPlayer)>>,
 ) {
     let map_raw = fs::read_to_string("assets/map.txt").expect("WRONG PATH");
 
@@ -119,6 +120,17 @@ pub fn setup_block_from_txt(
                     Vec3::new(200.0, 200.0, 200.0),
                     Transform::from_xyz(200.0 * x as f32, 0.0, 200.0 * y as f32)
                 );
+            }
+
+            if map_sign == "P" {
+                let mut cmr_transform = camera_transform.single_mut();
+                // cmr_transform.translation = *Vec3::new(
+                //     200.0 * x as f32,
+                //     cmr_transform.translation.y,
+                //     200.0 * y as f32,
+                // );
+                cmr_transform.translation.x = 200.0 * x as f32;
+                cmr_transform.translation.z = 200.0 * y as f32;
             }
         }
     }
