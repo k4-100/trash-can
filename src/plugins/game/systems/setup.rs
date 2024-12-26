@@ -4,6 +4,8 @@ use bevy::prelude::*;
 
 use crate::{spawn_cube_with_standard_material, utils::*};
 
+use map_generator;
+
 pub fn setup_camera(mut commands: Commands) {
     commands.spawn((
         components::CurrentPlayer,
@@ -104,7 +106,8 @@ pub fn setup_block_from_txt(
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut camera_transform: Query<&mut Transform, With<(components::CurrentPlayer)>>,
 ) {
-    let map_raw = fs::read_to_string("assets/map.txt").expect("WRONG PATH");
+    // let map_raw = fs::read_to_string("assets/map.txt").expect("WRONG PATH");
+    let map_raw = map_generator::generate_map();
 
     let map: Vec<&str> = map_raw.trim_end().split("\n").map(|item| item).collect();
 

@@ -34,6 +34,7 @@ bevy_reflect = "0.14.2"
 bevy_render = "0.14.2"
 bevy_window = "0.14.2"
 egui_dock = "0.14.0"
+rand = "0.8.5"
 
 
 
