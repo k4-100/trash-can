@@ -28,7 +28,7 @@ pub fn keyboard_movement(
     velocity = velocity.normalize_or_zero();
     // adjust direction with speed and time passed since the last run
     for mut transform in player_query.iter_mut() {
-        transform.translation += velocity * time.delta_seconds() * 300.0;
+        transform.translation += velocity * time.delta_seconds() * 3000.0;
     }
 }
 

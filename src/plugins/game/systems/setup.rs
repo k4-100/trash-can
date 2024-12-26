@@ -113,6 +113,22 @@ pub fn setup_block_from_txt(
 
     println!("{:#?}", map);
 
+    spawn_cube_with_standard_material!(
+        commands,
+        meshes,
+        materials.add(Color::srgb_u8(255, 0, 127)),
+        Vec3::new(
+            200.0 * map[0].len() as f32,
+            200.0,
+            200.0 * map.iter().count() as f32,
+        ),
+        Transform::from_xyz(
+            200.0 * (map[0].len() / 2) as f32 + 100.0,
+            -200.0,
+            200.0 * (map.iter().count() / 2) as f32 - 100.0,
+        )
+    );
+
     for (y, map_row) in map.iter().enumerate() {
         for (x, map_sign) in map_row.split("").enumerate() {
             if map_sign == "#" {
