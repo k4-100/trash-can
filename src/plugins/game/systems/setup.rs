@@ -102,12 +102,12 @@ pub fn setup_block_from_txt(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
-    mut camera_transform: Query<&mut Transform, With<(components::CurrentPlayer)>>,
+    mut camera_transform: Query<&mut Transform, With<components::CurrentPlayer>>,
 ) {
     // let map_raw = fs::read_to_string("assets/map.txt").expect("WRONG PATH");
     let map_raw = map_generator::generate_map();
 
-    let map: Vec<&str> = map_raw.trim_end().split("\n").map(|item| item).collect();
+    let map: Vec<&str> = map_raw.trim_end().split("\n").collect();
 
     println!("{:#?}", map);
 
@@ -115,15 +115,11 @@ pub fn setup_block_from_txt(
         commands,
         meshes,
         materials.add(Color::srgb_u8(255, 0, 127)),
-        Vec3::new(
-            200.0 * map[0].len() as f32,
-            200.0,
-            200.0 * map.iter().count() as f32,
-        ),
+        Vec3::new(200.0 * map[0].len() as f32, 200.0, 200.0 * map.len() as f32,),
         Transform::from_xyz(
             200.0 * (map[0].len() / 2) as f32 + 100.0,
             -200.0,
-            200.0 * (map.iter().count() / 2) as f32 - 100.0,
+            200.0 * (map.len() / 2) as f32 - 100.0,
         )
     );
 
