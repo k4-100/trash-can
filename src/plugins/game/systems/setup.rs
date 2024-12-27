@@ -10,19 +10,17 @@ pub fn setup_camera(mut commands: Commands) {
     commands.spawn((
         components::CurrentPlayer,
         components::Player,
-        Camera3dBundle {
-            transform: Transform {
-                scale: Vec3 {
-                    x: 1.5,
-                    y: 1.5,
-                    z: 1.0,
-                },
-                translation: Vec3::new(0.0, 0.0, 0.0),
-                ..default()
-            }
-            .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
+        Camera3d::default(),
+        Transform {
+            scale: Vec3 {
+                x: 2.0,
+                y: 2.0,
+                z: 1.0,
+            },
+            translation: Vec3::new(0.0, 0.0, 0.0),
             ..default()
-        },
+        }
+        .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
     ));
 }
 
@@ -31,37 +29,37 @@ pub fn setup_block(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    spawn_cube_with_standard_material!(
-        commands,
-        meshes,
-        materials.add(Color::srgb_u8(0, 0, 255)),
-        Vec3::new(200.0, 200.0, 200.0),
-        Transform::from_xyz(0.0, 0.0, -1000.0)
-    );
-
-    spawn_cube_with_standard_material!(
-        commands,
-        meshes,
-        materials.add(Color::srgb_u8(0, 255, 0)),
-        Vec3::new(200.0, 200.0, 200.0),
-        Transform::from_xyz(1000.0, 0.0, 0.0)
-    );
-
-    spawn_cube_with_standard_material!(
-        commands,
-        meshes,
-        materials.add(Color::srgb_u8(255, 0, 0)),
-        Vec3::new(200.0, 200.0, 200.0),
-        Transform::from_xyz(0.0, 0.0, 1000.0)
-    );
-
-    spawn_cube_with_standard_material!(
-        commands,
-        meshes,
-        materials.add(Color::srgb_u8(127, 0, 127)),
-        Vec3::new(200.0, 200.0, 200.0),
-        Transform::from_xyz(-1000.0, 0.0, 0.0)
-    );
+    // spawn_cube_with_standard_material!(
+    //     commands,
+    //     meshes,
+    //     materials.add(Color::srgb_u8(0, 0, 255)),
+    //     Vec3::new(200.0, 200.0, 200.0),
+    //     Transform::from_xyz(0.0, 0.0, -1000.0)
+    // );
+    //
+    // spawn_cube_with_standard_material!(
+    //     commands,
+    //     meshes,
+    //     materials.add(Color::srgb_u8(0, 255, 0)),
+    //     Vec3::new(200.0, 200.0, 200.0),
+    //     Transform::from_xyz(1000.0, 0.0, 0.0)
+    // );
+    //
+    // spawn_cube_with_standard_material!(
+    //     commands,
+    //     meshes,
+    //     materials.add(Color::srgb_u8(255, 0, 0)),
+    //     Vec3::new(200.0, 200.0, 200.0),
+    //     Transform::from_xyz(0.0, 0.0, 1000.0)
+    // );
+    //
+    // spawn_cube_with_standard_material!(
+    //     commands,
+    //     meshes,
+    //     materials.add(Color::srgb_u8(127, 0, 127)),
+    //     Vec3::new(200.0, 200.0, 200.0),
+    //     Transform::from_xyz(-1000.0, 0.0, 0.0)
+    // );
 
     // commands.spawn(PbrBundle {
     //     mesh: meshes.add(Cuboid::from_size(Vec3::new(200.0, 200.0, 200.0))),

@@ -28,7 +28,7 @@ pub fn keyboard_movement(
     velocity = velocity.normalize_or_zero();
     // adjust direction with speed and time passed since the last run
     for mut transform in player_query.iter_mut() {
-        transform.translation += velocity * time.delta_seconds() * 3000.0;
+        transform.translation += velocity * time.delta_secs() * 3000.0;
     }
 }
 
@@ -60,10 +60,10 @@ pub fn cursor_grab(
 
     // for a game that doesn't use the cursor (like a shooter):
     // use `Locked` mode to keep the cursor in one place
-    primary_window.cursor.grab_mode = CursorGrabMode::Locked;
+    primary_window.cursor_options.grab_mode = CursorGrabMode::Locked;
 
     // also hide the cursor
-    primary_window.cursor.visible = false;
+    primary_window.cursor_options.visible = false;
 
     cursor_grabbed.0 = true;
 }
@@ -74,8 +74,8 @@ pub fn cursor_ungrab(
 ) {
     let mut primary_window = q_windows.single_mut();
 
-    primary_window.cursor.grab_mode = CursorGrabMode::None;
-    primary_window.cursor.visible = true;
+    primary_window.cursor_options.grab_mode = CursorGrabMode::None;
+    primary_window.cursor_options.visible = true;
 
     cursor_grabbed.0 = false;
 }

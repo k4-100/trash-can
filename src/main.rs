@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_rapier3d::prelude::*;
 use plugins::debug::DebugPlugin;
 // use bevy_egui::{egui, EguiContext, EguiPlugin};
 // use bevy_inspector_egui::prelude::*;
@@ -10,6 +11,8 @@ pub mod utils;
 fn main() {
     App::new()
         .add_plugins((DefaultPlugins, plugins::game::GamePlugin))
+        // .add_plugins(RapierPhysicsPlugin::<NoUserData>::default())
+        // .add_plugins(RapierDebugRenderPlugin::default())
         // .add_plugins(DebugPlugin)
         // .add_plugins(EguiPlugin)
         // .add_plugins(bevy_inspector_egui::DefaultInspectorConfigPlugin) // adds default options and `InspectorEguiImpl`s

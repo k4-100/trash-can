@@ -9,12 +9,17 @@ macro_rules! spawn_cube_with_standard_material {
         $size_vec3:expr,
         $transform:expr
     ) => {{
-        $commands.spawn(PbrBundle {
-            mesh: $meshes.add(Cuboid::from_size($size_vec3)),
-            material: $material,
-            transform: $transform,
-            ..default()
-        });
+        // $commands.spawn(PbrBundle {
+        //     mesh: $meshes.add(Cuboid::from_size($size_vec3)),
+        //     material: $material,
+        //     transform: $transform,
+        //     ..default()
+        // });
+        $commands.spawn((
+            Mesh3d($meshes.add(Cuboid::from_size($size_vec3))),
+            MeshMaterial3d($material),
+            Transform::from($transform),
+        ));
     }};
 }
 
