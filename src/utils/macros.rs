@@ -19,6 +19,8 @@ macro_rules! spawn_cube_with_standard_material {
             Mesh3d($meshes.add(Cuboid::from_size($size_vec3))),
             MeshMaterial3d($material),
             Transform::from($transform),
+            Collider::cuboid($size_vec3.x / 2.0, $size_vec3.y / 2.0, $size_vec3.z / 2.0),
+            RigidBody::Fixed,
         ));
     }};
 }

@@ -1,6 +1,7 @@
 use std::fs;
 
 use bevy::prelude::*;
+use bevy_rapier3d::prelude::*;
 
 use crate::{spawn_cube_with_standard_material, utils::*};
 
@@ -21,6 +22,16 @@ pub fn setup_camera(mut commands: Commands) {
             ..default()
         }
         .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
+        Friction::coefficient(0.7),
+        Restitution::coefficient(0.3),
+        RigidBody::Dynamic,
+        // LockedAxes::ROTATION_LOCKED
+        LockedAxes::ROTATION_LOCKED,
+        Collider::cuboid(20.0, 20.0, 20.0),
+        Velocity {
+            linvel: Vec3::new(0.0, 0.0, 0.0),
+            angvel: Vec3::new(0.0, 0.0, 0.0),
+        },
     ));
 }
 
@@ -115,7 +126,7 @@ pub fn setup_block_from_txt(
         commands,
         meshes,
         materials.add(Color::srgb_u8(255, 0, 127)),
-        Vec3::new(200.0 * map[0].len() as f32, 200.0, 200.0 * map.len() as f32,),
+        Vec3::new(200.0 * map[0].len() as f32, 200.0, 200.0 * map.len() as f32),
         Transform::from_xyz(
             200.0 * (map[0].len() / 2) as f32 + 100.0,
             -200.0,

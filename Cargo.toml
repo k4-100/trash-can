@@ -34,6 +34,7 @@ bevy_egui = "0.31.1"
 bevy_rapier3d = { version = "0.28.0", features = [
   "simd-stable",
   "debug-render-3d",
+  "parallel"
 ] }
 bevy_reflect = "0.15.0"
 bevy_render = "0.15.0"

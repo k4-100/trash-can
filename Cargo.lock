@@ -3986,6 +3986,7 @@ dependencies = [
  "num-traits",
  "ordered-float",
  "parry3d",
+ "rayon",
  "rustc-hash 2.1.0",
  "simba",
  "thiserror",
