@@ -13,7 +13,7 @@ fn main() {
         .add_plugins((DefaultPlugins, plugins::game::GamePlugin))
         .add_plugins(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugins(RapierDebugRenderPlugin::default())
-        // .add_plugins(DebugPlugin)
+        .add_plugins(DebugPlugin)
         // .add_plugins(EguiPlugin)
         // .add_plugins(bevy_inspector_egui::DefaultInspectorConfigPlugin) // adds default options and `InspectorEguiImpl`s
         // .add_systems(Update, inspector_ui)

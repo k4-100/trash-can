@@ -1,13 +1,13 @@
 use std::fs;
 
-use bevy::prelude::*;
+use bevy::{pbr::CascadeShadowConfigBuilder, prelude::*};
 use bevy_rapier3d::prelude::*;
 
 use crate::{spawn_cube_with_standard_material, utils::*};
 
 use map_generator;
 
-pub fn setup_camera(mut commands: Commands) {
+pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         components::CurrentPlayer,
         components::Player,
@@ -113,6 +113,7 @@ pub fn setup_block_from_txt(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
+    asset_server: Res<AssetServer>,
     mut camera_transform: Query<&mut Transform, With<components::CurrentPlayer>>,
 ) {
     // let map_raw = fs::read_to_string("assets/map.txt").expect("WRONG PATH");
@@ -120,42 +121,78 @@ pub fn setup_block_from_txt(
 
     let map: Vec<&str> = map_raw.trim_end().split("\n").collect();
 
-    println!("{:#?}", map);
+    // println!("{:#?}", map);
+
+    // commands.spawn((
+    //     DirectionalLight {
+    //         shadows_enabled: true,
+    //         ..default()
+    //     },
+    //     // This is a relatively small scene, so use tighter shadow
+    //     // cascade bounds than the default for better quality.
+    //     // We also adjusted the shadow map to be larger since we're
+    //     // only using a single cascade.
+    //     CascadeShadowConfigBuilder {
+    //         num_cascades: 1,
+    //         maximum_distance: 1.6,
+    //         ..default()
+    //     }
+    //     .build(),
+    // ));
+
+    commands.spawn((
+        Transform::from_xyz(400.0, 200.0, 200.0),
+        SceneRoot(asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/bgun.glb"))),
+    ));
+
+    // commands.spawn(SceneBundle {
+    //     scene: asset_server.load("models/bgun.gltf"),
+    //     transform: Transform::from_xyz(200.0, 400.0, 200.0),
+    //     ..default()
+    // });
 
     spawn_cube_with_standard_material!(
         commands,
         meshes,
-        materials.add(Color::srgb_u8(255, 0, 127)),
-        Vec3::new(200.0 * map[0].len() as f32, 200.0, 200.0 * map.len() as f32),
-        Transform::from_xyz(
-            200.0 * (map[0].len() / 2) as f32 + 100.0,
-            -200.0,
-            200.0 * (map.len() / 2) as f32 - 100.0,
-        )
+        materials.add(Color::srgb_u8(0, 255, 127)),
+        Vec3::new(200.0, 200.0, 200.0),
+        Transform::from_xyz(1000.0, 0.0, 1000.0)
     );
 
-    for (y, map_row) in map.iter().enumerate() {
-        for (x, map_sign) in map_row.split("").enumerate() {
-            if map_sign == "#" {
-                spawn_cube_with_standard_material!(
-                    commands,
-                    meshes,
-                    materials.add(Color::srgb_u8(127, 0, 127)),
-                    Vec3::new(200.0, 200.0, 200.0),
-                    Transform::from_xyz(200.0 * x as f32, 0.0, 200.0 * y as f32)
-                );
-            }
-
-            if map_sign == "P" {
-                let mut cmr_transform = camera_transform.single_mut();
-                // cmr_transform.translation = *Vec3::new(
-                //     200.0 * x as f32,
-                //     cmr_transform.translation.y,
-                //     200.0 * y as f32,
-                // );
-                cmr_transform.translation.x = 200.0 * x as f32;
-                cmr_transform.translation.z = 200.0 * y as f32;
-            }
-        }
-    }
+    // spawn_cube_with_standard_material!(
+    //     commands,
+    //     meshes,
+    //     materials.add(Color::srgb_u8(255, 0, 127)),
+    //     Vec3::new(200.0 * map[0].len() as f32, 200.0, 200.0 * map.len() as f32),
+    //     Transform::from_xyz(
+    //         200.0 * (map[0].len() / 2) as f32 + 100.0,
+    //         -200.0,
+    //         200.0 * (map.len() / 2) as f32 - 100.0,
+    //     )
+    // );
+    //
+    // for (y, map_row) in map.iter().enumerate() {
+    //     for (x, map_sign) in map_row.split("").enumerate() {
+    //         if map_sign == "#" {
+    //             spawn_cube_with_standard_material!(
+    //                 commands,
+    //                 meshes,
+    //                 materials.add(Color::srgb_u8(127, 0, 127)),
+    //                 Vec3::new(200.0, 200.0, 200.0),
+    //                 Transform::from_xyz(200.0 * x as f32, 0.0, 200.0 * y as f32)
+    //             );
+    //         }
+    //
+    //         if map_sign == "P" {
+    //             let mut cmr_transform = camera_transform.single_mut();
+    //             // cmr_transform.translation = *Vec3::new(
+    //             //     200.0 * x as f32,
+    //             //     cmr_transform.translation.y,
+    //             //     200.0 * y as f32,
+    //             // );
+    //             cmr_transform.translation.x = 200.0 * x as f32;
+    //             cmr_transform.translation.z = 200.0 * y as f32;
+    //         }
+    //     }
+    // }
 }
