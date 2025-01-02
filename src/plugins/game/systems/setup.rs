@@ -8,31 +8,44 @@ use crate::{spawn_cube_with_standard_material, utils::*};
 use map_generator;
 
 pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn((
-        components::CurrentPlayer,
-        components::Player,
-        Camera3d::default(),
-        Transform {
-            scale: Vec3 {
-                x: 2.0,
-                y: 2.0,
-                z: 1.0,
+    let parent = commands
+        .spawn((
+            components::CurrentPlayer,
+            components::Player,
+            Camera3d::default(),
+            Transform {
+                scale: Vec3 {
+                    x: 2.0,
+                    y: 2.0,
+                    z: 1.0,
+                },
+                translation: Vec3::new(0.0, 0.0, 0.0),
+                ..default()
+            }
+            .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
+            Friction::coefficient(0.7),
+            Restitution::coefficient(0.3),
+            RigidBody::Dynamic,
+            // LockedAxes::ROTATION_LOCKED
+            LockedAxes::ROTATION_LOCKED,
+            Collider::cuboid(20.0, 20.0, 20.0),
+            Velocity {
+                linvel: Vec3::new(0.0, 0.0, 0.0),
+                angvel: Vec3::new(0.0, 0.0, 0.0),
             },
-            translation: Vec3::new(0.0, 0.0, 0.0),
-            ..default()
-        }
-        .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
-        Friction::coefficient(0.7),
-        Restitution::coefficient(0.3),
-        RigidBody::Dynamic,
-        // LockedAxes::ROTATION_LOCKED
-        LockedAxes::ROTATION_LOCKED,
-        Collider::cuboid(20.0, 20.0, 20.0),
-        Velocity {
-            linvel: Vec3::new(0.0, 0.0, 0.0),
-            angvel: Vec3::new(0.0, 0.0, 0.0),
-        },
-    ));
+        ))
+        .with_children(|parent| {
+            parent.spawn((
+                Transform {
+                    translation: Vec3::new(0.0, 0.0, 500.0),
+                    scale: Vec3::new(0.0, 0.0, -0.0),
+                    ..default()
+                },
+                SceneRoot(
+                    asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/untitled.glb")),
+                ),
+            ));
+        });
 }
 
 pub fn setup_block(
@@ -141,8 +154,12 @@ pub fn setup_block_from_txt(
     // ));
 
     commands.spawn((
-        Transform::from_xyz(400.0, 200.0, 200.0),
-        SceneRoot(asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/bgun.glb"))),
+        Transform {
+            translation: Vec3::new(0.0, 100.0, -800.0),
+            scale: Vec3::new(10.0, 10.0, 10.0),
+            ..default()
+        },
+        SceneRoot(asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/untitled.glb"))),
     ));
 
     // commands.spawn(SceneBundle {
@@ -156,7 +173,7 @@ pub fn setup_block_from_txt(
         meshes,
         materials.add(Color::srgb_u8(0, 255, 127)),
         Vec3::new(200.0, 200.0, 200.0),
-        Transform::from_xyz(1000.0, 0.0, 1000.0)
+        Transform::from_xyz(0.0, 100.0, -800.0)
     );
 
     // spawn_cube_with_standard_material!(
