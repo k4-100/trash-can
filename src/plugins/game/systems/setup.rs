@@ -1,14 +1,15 @@
 use std::fs;
 
-use bevy::{pbr::CascadeShadowConfigBuilder, prelude::*};
+use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
+use bevy_render::camera::Viewport;
 
 use crate::{spawn_cube_with_standard_material, utils::*};
 
 use map_generator;
 
 pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let parent = commands
+    commands
         .spawn((
             components::CurrentPlayer,
             components::Player,
@@ -44,6 +45,31 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
                 SceneRoot(
                     asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/untitled.glb")),
                 ),
+            ));
+
+            parent.spawn((
+                components::MiniMapCamera,
+                Camera3d::default(),
+                Transform {
+                    scale: Vec3 {
+                        x: 4.0,
+                        y: 4.0,
+                        z: 1.0,
+                    },
+                    translation: Vec3::new(0.0, 2000.0, 0.0),
+                    ..default()
+                }
+                .looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Y),
+                Camera {
+                    viewport: Some(Viewport {
+                        physical_position: UVec2::new(0, 0),
+                        physical_size: UVec2::new(512, 512),
+                        ..default()
+                    }),
+                    order: 2,
+                    clear_color: ClearColorConfig::Custom(Color::linear_rgb(0.0, 0.0, 255.0)),
+                    ..default()
+                },
             ));
         });
 }

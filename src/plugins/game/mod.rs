@@ -21,6 +21,7 @@ impl Plugin for GamePlugin {
             .add_systems(
                 Update,
                 (
+                    update::update_minimap_position,
                     // movement::keyboard_movement,
                     movement::keyboard_movement,
                     movement::cursor_grab.run_if(run_conditions::if_rmb_pressed),
