@@ -59,7 +59,7 @@ pub fn keyboard_movement(
         }
 
         velocity = velocity.normalize_or_zero();
-        vel.linvel = velocity * time.delta_secs() * 300000.0;
+        vel.linvel = velocity * time.delta_secs() * 100000.0;
     }
     // adjust direction with speed and time passed since the last run
     // for mut transform in player_query.iter_mut() {

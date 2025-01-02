@@ -37,9 +37,9 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
         .with_children(|parent| {
             parent.spawn((
                 Transform {
-                    translation: Vec3::new(0.0, 0.0, 500.0),
-                    scale: Vec3::new(0.0, 0.0, -0.0),
-                    ..default()
+                    translation: Vec3::new(-15.0, -10.0, -60.0),
+                    scale: Vec3::new(1.0, 1.0, 1.0),
+                    rotation: Quat::from_scaled_axis(Vec3::new(0.0, -1.5, 0.0)),
                 },
                 SceneRoot(
                     asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/untitled.glb")),
@@ -168,48 +168,48 @@ pub fn setup_block_from_txt(
     //     ..default()
     // });
 
-    spawn_cube_with_standard_material!(
-        commands,
-        meshes,
-        materials.add(Color::srgb_u8(0, 255, 127)),
-        Vec3::new(200.0, 200.0, 200.0),
-        Transform::from_xyz(0.0, 100.0, -800.0)
-    );
-
     // spawn_cube_with_standard_material!(
     //     commands,
     //     meshes,
-    //     materials.add(Color::srgb_u8(255, 0, 127)),
-    //     Vec3::new(200.0 * map[0].len() as f32, 200.0, 200.0 * map.len() as f32),
-    //     Transform::from_xyz(
-    //         200.0 * (map[0].len() / 2) as f32 + 100.0,
-    //         -200.0,
-    //         200.0 * (map.len() / 2) as f32 - 100.0,
-    //     )
+    //     materials.add(Color::srgb_u8(0, 255, 127)),
+    //     Vec3::new(200.0, 200.0, 200.0),
+    //     Transform::from_xyz(0.0, 100.0, -800.0)
     // );
-    //
-    // for (y, map_row) in map.iter().enumerate() {
-    //     for (x, map_sign) in map_row.split("").enumerate() {
-    //         if map_sign == "#" {
-    //             spawn_cube_with_standard_material!(
-    //                 commands,
-    //                 meshes,
-    //                 materials.add(Color::srgb_u8(127, 0, 127)),
-    //                 Vec3::new(200.0, 200.0, 200.0),
-    //                 Transform::from_xyz(200.0 * x as f32, 0.0, 200.0 * y as f32)
-    //             );
-    //         }
-    //
-    //         if map_sign == "P" {
-    //             let mut cmr_transform = camera_transform.single_mut();
-    //             // cmr_transform.translation = *Vec3::new(
-    //             //     200.0 * x as f32,
-    //             //     cmr_transform.translation.y,
-    //             //     200.0 * y as f32,
-    //             // );
-    //             cmr_transform.translation.x = 200.0 * x as f32;
-    //             cmr_transform.translation.z = 200.0 * y as f32;
-    //         }
-    //     }
-    // }
+
+    spawn_cube_with_standard_material!(
+        commands,
+        meshes,
+        materials.add(Color::srgb_u8(255, 0, 127)),
+        Vec3::new(200.0 * map[0].len() as f32, 200.0, 200.0 * map.len() as f32),
+        Transform::from_xyz(
+            200.0 * (map[0].len() / 2) as f32 + 100.0,
+            -200.0,
+            200.0 * (map.len() / 2) as f32 - 100.0,
+        )
+    );
+
+    for (y, map_row) in map.iter().enumerate() {
+        for (x, map_sign) in map_row.split("").enumerate() {
+            if map_sign == "#" {
+                spawn_cube_with_standard_material!(
+                    commands,
+                    meshes,
+                    materials.add(Color::srgb_u8(127, 0, 127)),
+                    Vec3::new(200.0, 200.0, 200.0),
+                    Transform::from_xyz(200.0 * x as f32, 0.0, 200.0 * y as f32)
+                );
+            }
+
+            if map_sign == "P" {
+                let mut cmr_transform = camera_transform.single_mut();
+                // cmr_transform.translation = *Vec3::new(
+                //     200.0 * x as f32,
+                //     cmr_transform.translation.y,
+                //     200.0 * y as f32,
+                // );
+                cmr_transform.translation.x = 200.0 * x as f32;
+                cmr_transform.translation.z = 200.0 * y as f32;
+            }
+        }
+    }
 }
