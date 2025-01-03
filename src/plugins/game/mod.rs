@@ -22,6 +22,7 @@ impl Plugin for GamePlugin {
                 Update,
                 (
                     update::update_minimap_position,
+                    update::update_coords_text,
                     // movement::keyboard_movement,
                     movement::keyboard_movement,
                     movement::cursor_grab.run_if(run_conditions::if_rmb_pressed),

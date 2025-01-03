@@ -71,8 +71,57 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
                     ..default()
                 },
             ));
+            // .with_children(|parent2| {
+            //     parent2.spawn((
+            //         components::CoordsText,
+            //         // Accepts a `String` or any type that converts into a `String`, such as `&str`
+            //         Text::new("hello\nbevy!"),
+            //         TextFont {
+            //             // This font is loaded and will be used instead of the default font.
+            //             font: asset_server.load("fonts/HackNerdFont-Regular.ttf"),
+            //             font_size: 100.0,
+            //
+            //             ..default()
+            //         },
+            //         // Set the justification of the Text
+            //         TextLayout::new_with_justify(JustifyText::Center),
+            //         Transform::from_translation(Vec3::Z),
+            //         // Set the style of the Node itself.
+            //         Node {
+            //             position_type: PositionType::Absolute,
+            //             bottom: Val::Px(200.0),
+            //             right: Val::Px(200.0),
+            //             ..default()
+            //         },
+            //     ));
+            // });
         });
+
+    commands.spawn((
+        components::CoordsText,
+        // Accepts a `String` or any type that converts into a `String`, such as `&str`
+        Text::new(" x: -100.0\ny: 50.5"),
+        TextFont {
+            // This font is loaded and will be used instead of the default font.
+            font: asset_server.load("fonts/HackNerdFont-Regular.ttf"),
+            font_size: 30.0,
+
+            ..default()
+        },
+        // Set the justification of the Text
+        TextLayout::new_with_justify(JustifyText::Center),
+        Transform::from_translation(Vec3::Z),
+        // Set the style of the Node itself.
+        Node {
+            position_type: PositionType::Absolute,
+            bottom: Val::Px(400.0),
+            right: Val::Px(200.0),
+            ..default()
+        },
+    ));
 }
+
+pub fn setup_text(mut commands: Commands, asset_server: Res<AssetServer>) {}
 
 pub fn setup_block(
     mut commands: Commands,

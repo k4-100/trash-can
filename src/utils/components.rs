@@ -8,3 +8,6 @@ pub struct Player;
 
 #[derive(Component, Debug)]
 pub struct MiniMapCamera;
+
+#[derive(Component, Debug)]
+pub struct CoordsText;

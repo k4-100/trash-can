@@ -23,3 +23,12 @@ pub fn update_minimap_position(
     };
     mnmp_camera.viewport = Some(mnmp_camera_viewport);
 }
+
+pub fn update_coords_text(
+    player_transform_query: Query<&Transform, With<components::CurrentPlayer>>,
+    mut text_query: Query<&mut Text, With<components::CoordsText>>,
+) {
+    let position = player_transform_query.single().translation;
+    let mut text = text_query.single_mut();
+    *text = Text::new(format!(" x: {}\ny: {}", position.x, position.z));
+}
