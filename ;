@@ -64,7 +64,7 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
             Camera {
                 viewport: Some(Viewport {
                     physical_position: UVec2::new(0, 0),
-                    physical_size: UVec2::new(364, 364),
+                    physical_size: UVec2::new(512, 512),
                     ..default()
                 }),
                 order: 2,
@@ -74,43 +74,27 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
         ))
         .id();
 
-    let gun = commands
-        .spawn((
-            Transform {
-                translation: Vec3::new(-15.0, -10.0, -60.0),
-                scale: Vec3::new(1.0, 1.0, 1.0),
-                rotation: Quat::from_scaled_axis(Vec3::new(0.0, -1.5, 0.0)),
-            },
-            SceneRoot(
-                asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/untitled.glb")),
-            ),
-        ))
-        .id();
-
     commands
         .spawn((
             TargetCamera(main_camera),
             Node {
-                display: Display::Flex,
-                align_items: AlignItems::Center,
-                justify_content: JustifyContent::Center,
                 width: Val::Percent(100.0),
                 height: Val::Percent(100.0),
+                // row_gap: Val::Px(5.),
                 ..default()
             },
             // BackgroundColor(Color::srgb(0.15, 0.45, 0.15)),
         ))
         .with_children(|builder| {
-            builder.spawn((
+            builder.spawn(
                 Node {
-                    width: Val::Px(5.0),
-                    height: Val::Px(5.0),
-
+                    width: Val::Px(100.0),
+                    height: Val::Px(100.0),
                     // row_gap: Val::Px(5.),
                     ..default()
                 },
-                BackgroundColor(Color::srgb(0.15, 0.95, 0.15)),
-            ));
+                BackgroundColor(Color::srgb(0.15, 0.45, 0.15)),
+            );
         });
 
     commands.spawn((
@@ -137,12 +121,10 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
         },
     ));
 
-    commands
-        .entity(main_camera)
-        .add_children(&[minimap_camera, gun]);
+    commands.entity(main_camera).add_children(&[minimap_camera]);
 }
 
-// pub fn setup_text(mut commands: Commands, asset_server: Res<AssetServer>) {}
+pub fn setup_text(mut commands: Commands, asset_server: Res<AssetServer>) {}
 
 pub fn setup_block(
     mut commands: Commands,

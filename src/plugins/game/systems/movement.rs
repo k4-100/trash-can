@@ -5,36 +5,6 @@ use bevy::{input::mouse::MouseMotion, math::NormedVectorSpace, prelude::*};
 use bevy_rapier3d::prelude::*;
 use bevy_window::{CursorGrabMode, PrimaryWindow};
 
-// pub fn keyboard_movement(
-//     mut player_query: Query<(&mut Transform), With<components::Player>>,
-//     keyboard_input: Res<ButtonInput<KeyCode>>,
-//     time: Res<Time>,
-// ) {
-//     let mut velocity = Vec3::ZERO;
-//     for transform in player_query.iter() {
-//         let local_z = transform.local_z();
-//         let forward = -Vec3::new(local_z.x, 0., local_z.z);
-//         let right = Vec3::new(local_z.z, 0., -local_z.x);
-//
-//         for key in keyboard_input.get_pressed() {
-//             match *key {
-//                 KeyCode::KeyW => velocity += forward,
-//                 KeyCode::KeyS => velocity -= forward,
-//                 KeyCode::KeyA => velocity -= right,
-//                 KeyCode::KeyD => velocity += right,
-//                 _ => {
-//                     return; // quit the execution if no key has been pressed pressed
-//                 }
-//             }
-//         }
-//     }
-//     velocity = velocity.normalize_or_zero();
-//     // adjust direction with speed and time passed since the last run
-//     for mut transform in player_query.iter_mut() {
-//         transform.translation += velocity * time.delta_secs() * 3000.0;
-//     }
-// }
-
 pub fn keyboard_movement(
     mut player_query: Query<(&Transform, &mut Velocity), With<components::Player>>,
     keyboard_input: Res<ButtonInput<KeyCode>>,

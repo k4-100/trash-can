@@ -7,6 +7,13 @@ use crate::utils::components;
 pub fn update_minimap_position(
     window: Query<&Window>,
     mut minimap_camera: Query<&mut Camera, With<components::MiniMapCamera>>,
+    mut player_camera: Query<
+        &mut Camera,
+        (
+            With<components::CurrentPlayer>,
+            Without<components::MiniMapCamera>,
+        ),
+    >,
 ) {
     let window = window.single();
 
@@ -22,13 +29,25 @@ pub fn update_minimap_position(
         ..mnmp_camera_viewport
     };
     mnmp_camera.viewport = Some(mnmp_camera_viewport);
+    // println!("{}", player_camera.iter().count());
+
+    let mut plr_camera = player_camera.single_mut();
+    let mut plr_camera_viewport = plr_camera.viewport.clone().unwrap();
+    plr_camera_viewport = Viewport {
+        physical_size: UVec2 {
+            x: physical_size.x,
+            y: physical_size.y,
+        },
+        ..plr_camera_viewport
+    };
+    plr_camera.viewport = Some(plr_camera_viewport);
 }
 
 pub fn update_coords_text(
     player_transform_query: Query<&Transform, With<components::CurrentPlayer>>,
     mut text_query: Query<&mut Text, With<components::CoordsText>>,
 ) {
-    let position = player_transform_query.single().translation;
-    let mut text = text_query.single_mut();
-    *text = Text::new(format!(" x: {}\ny: {}", position.x, position.z));
+    // let position = player_transform_query.single().translation;
+    // let mut text = text_query.single_mut();
+    // *text = Text::new(format!(" x: {}\ny: {}", position.x, position.z));
 }
