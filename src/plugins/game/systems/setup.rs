@@ -308,19 +308,23 @@ pub fn setup_block_from_txt(
             }
 
             if map_sign == "E" {
-                commands.spawn((
-                    Transform {
-                        translation: Vec3::new(200.0 * x as f32, -100.0, 200.0 * y as f32),
-                        scale: Vec3::new(10.0, 10.0, 10.0),
-                        rotation: Quat::from_scaled_axis(Vec3::new(0.0, 0.0, 0.0)),
-                    },
-                    SceneRoot(
-                        asset_server
-                            .load(GltfAssetLabel::Scene(0).from_asset("models/scraper.glb")),
-                    ),
-                    Collider::cuboid(10.0, 10.0, 10.0),
-                    RigidBody::Fixed,
-                ));
+                commands
+                    .spawn((
+                        Transform {
+                            translation: Vec3::new(200.0 * x as f32, 200.0, 200.0 * y as f32),
+                            scale: Vec3::new(10.0, 10.0, 10.0),
+                            rotation: Quat::from_scaled_axis(Vec3::new(0.0, 0.0, 0.0)),
+                        },
+                        SceneRoot(
+                            asset_server
+                                .load(GltfAssetLabel::Scene(0).from_asset("models/scraper.glb")),
+                        ),
+                        RigidBody::Dynamic,
+                    ))
+                    .with_child((
+                        Collider::cuboid(10.0, 14.0, 10.0),
+                        Transform::from_translation(Vec3::new(0.0, 13.0, 0.0)),
+                    ));
             }
         }
     }
