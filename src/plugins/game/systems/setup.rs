@@ -312,7 +312,7 @@ pub fn setup_block_from_txt(
                     .spawn((
                         Transform {
                             translation: Vec3::new(200.0 * x as f32, 200.0, 200.0 * y as f32),
-                            scale: Vec3::new(10.0, 10.0, 10.0),
+                            scale: Vec3::new(7.0, 7.0, 7.0),
                             rotation: Quat::from_scaled_axis(Vec3::new(0.0, 0.0, 0.0)),
                         },
                         SceneRoot(
@@ -320,9 +320,10 @@ pub fn setup_block_from_txt(
                                 .load(GltfAssetLabel::Scene(0).from_asset("models/scraper.glb")),
                         ),
                         RigidBody::Dynamic,
+                        LockedAxes::ROTATION_LOCKED,
                     ))
                     .with_child((
-                        Collider::cuboid(10.0, 14.0, 10.0),
+                        Collider::cuboid(5.0, 12.0, 5.0),
                         Transform::from_translation(Vec3::new(0.0, 13.0, 0.0)),
                     ));
             }
