@@ -306,6 +306,22 @@ pub fn setup_block_from_txt(
                 cmr_transform.translation.x = 200.0 * x as f32;
                 cmr_transform.translation.z = 200.0 * y as f32;
             }
+
+            if map_sign == "E" {
+                commands.spawn((
+                    Transform {
+                        translation: Vec3::new(200.0 * x as f32, -100.0, 200.0 * y as f32),
+                        scale: Vec3::new(10.0, 10.0, 10.0),
+                        rotation: Quat::from_scaled_axis(Vec3::new(0.0, 0.0, 0.0)),
+                    },
+                    SceneRoot(
+                        asset_server
+                            .load(GltfAssetLabel::Scene(0).from_asset("models/scraper.glb")),
+                    ),
+                    Collider::cuboid(10.0, 10.0, 10.0),
+                    RigidBody::Fixed,
+                ));
+            }
         }
     }
 }

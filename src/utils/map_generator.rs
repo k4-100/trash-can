@@ -238,7 +238,7 @@ pub fn generate_map() -> String {
 
     let mut passages: Vec<((usize, usize), EntryVariant)> = Vec::new();
 
-    let mut spawnpointSet = false;
+    let mut spawnpoints_set = 0;
     if !leaves.is_empty() {
         for leaf in leaves.iter().rev() {
             let leaf_unwrapped = &leaf.borrow();
@@ -275,9 +275,14 @@ pub fn generate_map() -> String {
                         passages.push(new_passage);
                     }
 
-                    if x == rb.0 / 2 && y == rb.1 / 2 && !spawnpointSet {
+                    if x == rb.0 / 2 && y == rb.1 / 2 && spawnpoints_set == 0 {
                         displayed_grid[y][x] = "P";
-                        spawnpointSet = true;
+                        spawnpoints_set = 1;
+                        continue;
+                    }
+                    if x == rb.0 / 2 && y == rb.1 / 2 && spawnpoints_set == 1 {
+                        displayed_grid[y][x] = "E";
+                        spawnpoints_set = 2;
                     }
                 }
             }
