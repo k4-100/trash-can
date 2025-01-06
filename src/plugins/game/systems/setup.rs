@@ -121,7 +121,7 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
         TextFont {
             // This font is loaded and will be used instead of the default font.
             font: asset_server.load("fonts/HackNerdFont-Regular.ttf"),
-            font_size: 30.0,
+            font_size: 25.0,
 
             ..default()
         },
@@ -131,8 +131,8 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
         // Set the style of the Node itself.
         Node {
             position_type: PositionType::Absolute,
-            bottom: Val::Px(400.0),
-            right: Val::Px(200.0),
+            top: Val::Px(0.0),
+            right: Val::Px(100.0),
             ..default()
         },
     ));
