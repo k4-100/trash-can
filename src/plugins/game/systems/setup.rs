@@ -137,9 +137,7 @@ pub fn setup_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
         },
     ));
 
-    commands
-        .entity(main_camera)
-        .add_children(&[minimap_camera, gun]);
+    commands.entity(main_camera).add_children(&[gun]);
 }
 
 // pub fn setup_text(mut commands: Commands, asset_server: Res<AssetServer>) {}
